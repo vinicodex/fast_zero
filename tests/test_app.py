@@ -38,6 +38,22 @@ def test_read_users(client):
     }
 
 
+def test_should_raise_exception_when_get_user(client):
+    response = client.get('/users/0')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'User not found'}
+
+
+def test_get_user(client):
+    response = client.get('/users/1')
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        'username': 'string2',
+        'email': 'user@example.com',
+        'id': 1,
+    }
+
+
 def test_should_raise_exception(client):
     response = client.put(
         '/users/0',
