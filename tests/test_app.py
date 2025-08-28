@@ -67,3 +67,15 @@ def test_update_user(client):
         'email': 'marcos@example.com',
         'id': 1,
     }
+
+
+def test_should_raise_exception_when_deleting_user(client):
+    response = client.delete(
+        '/users/0',
+    )
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_delete_user(client):
+    response = client.delete('/users/1')
+    assert response.status_code == HTTPStatus.OK
